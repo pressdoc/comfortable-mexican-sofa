@@ -71,7 +71,7 @@ class ComfortableMexicanSofa::Configuration
   def initialize
     @cms_title            = 'ComfortableMexicanSofa CMS Engine'
     @base_controller      = 'ApplicationController'
-    @admin_auth           = 'ComfortableMexicanSofa::HttpAuth'
+    @admin_auth           = 'CmsDeviseAuth'
     @public_auth          = 'ComfortableMexicanSofa::DummyAuth'
     @seed_data_path       = nil
     @admin_route_redirect = ''
