@@ -10,9 +10,10 @@ module ComfortableMexicanSofa::HttpAuth
   # this method should return +true+ if everything is great, or redirect user
   # to some other page, thus denying access to cms admin section.
   def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
-      username == self.username && password == self.password
-    end
+  #   authenticate_or_request_with_http_basic do |username, password|
+  #     username == self.username && password == self.password
+  #   end
+    true
   end
   
 end
