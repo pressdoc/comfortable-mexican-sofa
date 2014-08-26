@@ -25,6 +25,7 @@ class CmsAdmin::PagesController < CmsAdmin::BaseController
   end
 
   def create
+    @page.author = User.find(session["warden.user.user.key"][0][0]).first_name
     @page.save!
     flash[:success] = I18n.t('cms.pages.created')
     redirect_to :action => :edit, :id => @page
@@ -35,6 +36,7 @@ class CmsAdmin::PagesController < CmsAdmin::BaseController
   end
 
   def update
+    @page.author = User.find(session["warden.user.user.key"][0][0]).first_name
     @page.save!
     flash[:success] = I18n.t('cms.pages.updated')
     redirect_to :action => :edit, :id => @page
