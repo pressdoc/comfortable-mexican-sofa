@@ -4,7 +4,7 @@ module ComfortableMexicanSofa::Fixture::Snippet
     def import!
       Dir["#{self.path}*/"].each do |path|
         identifier = path.split('/').last
-        snippet = self.site.snippets.find_or_initialize_by_identifier(identifier)
+        snippet = self.site.snippets.find_or_initialize_by(:identifier => identifier)
         
         # setting attributes
         categories = []
@@ -20,7 +20,7 @@ module ComfortableMexicanSofa::Fixture::Snippet
         # setting content
         if File.exists?(content_path = File.join(path, 'content.html'))
           if fresh_fixture?(snippet, content_path)
-            snippet.content = File.open(content_path).read
+            snippet.content = read_as_haml(content_path)
           end
         end
         

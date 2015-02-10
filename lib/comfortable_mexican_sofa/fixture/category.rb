@@ -9,7 +9,7 @@ module ComfortableMexicanSofa::Fixture::Category
         if File.exists?(attrs_path = File.join(path, "#{file}.yml"))
           categories = get_attributes(attrs_path)
           [categories].flatten.each do |label|
-            self.site.categories.find_or_create_by_label_and_categorized_type(label, type)
+            self.site.categories.find_or_create_by(:label => label, :categorized_type => type)
           end
         end
       end

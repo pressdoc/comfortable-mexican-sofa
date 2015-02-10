@@ -1,8 +1,14 @@
 #= require jquery
 #= require jquery_ujs
 #= require jquery.ui.all
+#= require codemirror
+#= require codemirror/modes/css
+#= require codemirror/modes/htmlmixed
+#= require codemirror/modes/javascript
+#= require codemirror/modes/markdown
+#= require codemirror/modes/xml
+#= require codemirror/addons/edit/closetag
 #= require comfortable_mexican_sofa/lib/bootstrap
-#= require comfortable_mexican_sofa/lib/codemirror
 #= require comfortable_mexican_sofa/lib/wysihtml5
 #= require comfortable_mexican_sofa/lib/bootstrap-wysihtml5
 #= require comfortable_mexican_sofa/lib/bootstrap-datetimepicker
@@ -26,6 +32,7 @@ window.CMS =
     CMS.page_update_publish()
     CMS.categories()
     CMS.uploader()
+    CMS.uploaded_files()
 
 
 window.CMS.slugify = ->
@@ -150,8 +157,11 @@ window.CMS.uploader = ->
       raw_string  = d.body.innerHTML
       json_string = raw_string.match(/\{(.|\n)*\}/)[0]
       json = $.parseJSON(json_string)
-      files = $($('<div/>').html(json.view).text()).hide()
+      files = $('<div/>').html(json.view).hide()
       $('.uploaded-files').prepend(files)
       files.map ->
         $(this).fadeIn()
-  
+
+window.CMS.uploaded_files = ->
+  $('.uploaded-files').on 'click', 'input', ->
+    $(this).select()

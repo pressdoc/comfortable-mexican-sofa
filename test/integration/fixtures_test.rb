@@ -2,10 +2,10 @@
 
 require_relative '../test_helper'
 
-class FixturesTest < ActionDispatch::IntegrationTest
+class FixturesIntergrationTest < ActionDispatch::IntegrationTest
   
   def setup
-    cms_sites(:default).update_column(:identifier, 'sample-site')
+    cms_sites(:default).update_columns(:identifier => 'sample-site')
   end
   
   def test_fixtures_disabled
@@ -30,7 +30,7 @@ class FixturesTest < ActionDispatch::IntegrationTest
         assert_difference 'Cms::Snippet.count', 1 do
           get '/'
           assert_response :redirect
-          assert_redirected_to 'http://test.host/child'
+          assert_redirected_to '//test.host/child'
           follow_redirect!
           
           assert_equal 'Home Fixture Page', Cms::Page.root.label
@@ -52,7 +52,7 @@ class FixturesTest < ActionDispatch::IntegrationTest
     assert_difference 'Cms::Page.count', 2 do
       assert_difference 'Cms::Layout.count', 2 do
         assert_difference 'Cms::Snippet.count', 1 do
-           http_auth :get, "/cms-admin/sites/#{cms_sites(:default).id}/pages"
+           http_auth :get, "/admin/sites/#{cms_sites(:default).id}/pages"
            assert_response :success
            assert_equal 'CMS Fixtures are enabled. All changes done here will be discarded.', flash[:error]
         end

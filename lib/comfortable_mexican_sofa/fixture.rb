@@ -30,11 +30,21 @@ module ComfortableMexicanSofa::Fixture
     def save_categorizations!(object, categories)
       object.categorizations.delete_all
       [categories].flatten.compact.each do |label|
-        category = self.site.categories.find_or_create_by_label_and_categorized_type(label, object.class.to_s)
+        category = self.site.categories.find_or_create_by(
+          :label            => label,
+          :categorized_type => object.class.to_s
+        )
         category.categorizations.create!(
           :categorized => object
         )
       end
+    end
+    
+    def read_as_haml(path)
+      content = ::File.open(path).read
+      Haml::Engine.new(content).render.rstrip
+    rescue # Bad haml, calls to helpers, who knows?
+      content
     end
     
     def import!

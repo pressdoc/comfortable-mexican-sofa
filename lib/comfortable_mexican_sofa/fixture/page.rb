@@ -37,27 +37,23 @@ module ComfortableMexicanSofa::Fixture::Page
         blocks_to_clear = page.blocks.collect(&:identifier)
         blocks_attributes = [ ]
         Dir.glob("#{path}/*.html").each do |block_path|
-          identifier = block_path.split('/').last.gsub(/\.html$/, '')
+          identifier = block_path.split('/').last.gsub(/\.html\z/, '')
           blocks_to_clear.delete(identifier)
           if fresh_fixture?(page, block_path)
             blocks_attributes << {
               :identifier => identifier,
-              :content    => File.open(block_path).read
+              :content    => read_as_haml(block_path)
             }
           end
         end
         
-        blocks_to_clear.each do |identifier|
-          blocks_attributes << {
-            :identifier => identifier,
-            :content    => nil
-          }
-        end
+        # deleting removed blocks
+        page.blocks.where(:identifier => blocks_to_clear).destroy_all
         
         page.blocks_attributes = blocks_attributes if blocks_attributes.present?
         
         # saving
-        if page.changed? || self.force_import
+        if page.changed? || page.blocks_attributes_changed || self.force_import
           if page.save
             save_categorizations!(page, categories)
             ComfortableMexicanSofa.logger.warn("[FIXTURES] Imported Page \t #{page.full_path}")
