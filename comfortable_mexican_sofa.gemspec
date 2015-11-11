@@ -11,12 +11,12 @@ Gem::Specification.new do |s|
   s.homepage      = "http://github.com/comfy/comfortable-mexican-sofa"
   s.summary       = "CMS Engine for Rails 3 apps"
   s.description   = "ComfortableMexicanSofa is a powerful CMS Engine for Ruby on Rails 3 applications"
-  
+
   s.files         = `git ls-files`.split("\n")
   s.platform      = Gem::Platform::RUBY
   s.require_paths = ['lib']
-  
-  s.add_dependency 'rails',           '~> 3.1'
+
+  s.add_dependency 'rails'
   s.add_dependency 'formatted_form',  '>= 2.1.0'
   s.add_dependency 'active_link_to',  '>= 1.0.0'
   s.add_dependency 'paperclip',       '>= 3.4.0'
